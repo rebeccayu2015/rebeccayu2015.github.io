@@ -1,0 +1,18 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ExperienceEntry from "../components/content/ExperienceEntry.astro";
+import { PAGES } from "../config";
+const education = (await getCollection("education")).sort((a, b) => a.data.order - b.data.order);
+const leadership = (await getCollection("leadership")).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title={PAGES.education.title}>
+  <div class="container-narrow">
+    <header class="page-header"><h1 class="page-title">{PAGES.education.title}</h1></header>
+    <div class="entry-list">{education.map(({ data }) => <ExperienceEntry organization={data.institution} role={data.program} dates={data.dates} logo={data.logo} details={data.details} />)}</div>
+    <section class="page-section" aria-labelledby="leadership-title">
+      <h2 id="leadership-title" class="section-title">Leadership &amp; Involvement</h2>
+      <ul class="leadership-list">{leadership.map(({ data }) => <li><strong>{data.organization}</strong><span> — {data.position}</span></li>)}</ul>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  authors: string;
+  equalContribution?: string;
+  venue: string;
+  description?: string;
+  paperUrl: string | null;
+  paperLabel: string;
+  codeUrl: string;
+  resultsUrl: string;
+}
+const props = Astro.props;
+---
+
+<article class="publication-entry">
+  <h3>{props.title}</h3>
+  <p class="publication-authors">{props.authors}</p>
+  {props.equalContribution && <p class="publication-note">{props.equalContribution}</p>}
+  <p class="publication-venue">{props.venue}</p>
+  {props.description && <p class="publication-description">{props.description}</p>}
+  <div class="entry-links">
+    {props.paperUrl ? (
+      <a href={props.paperUrl} target="_blank" rel="noopener noreferrer">Paper</a>
+    ) : (
+      <span class="link-placeholder">{props.paperLabel}</span>
+    )}
+    <a href={props.codeUrl} target="_blank" rel="noopener noreferrer">Code</a>
+    <a href={props.resultsUrl} target="_blank" rel="noopener noreferrer">Interactive Results</a>
+  </div>
+</article>

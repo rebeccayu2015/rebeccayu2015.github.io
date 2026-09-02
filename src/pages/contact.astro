@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Icon from "../components/ui/Icon.astro";
+import { PAGES } from "../config";
+---
+<BaseLayout title={PAGES.contact.title}>
+  <div class="container-narrow">
+    <header class="page-header"><h1 class="page-title">{PAGES.contact.title}</h1></header>
+    <div class="contact-content">
+      <p class="contact-intro">I'm always happy to connect about research, engineering, or other interesting projects. Feel free to reach out to me on LinkedIn.</p>
+      <div class="contact-grid">
+        <a class="contact-card" href="https://www.linkedin.com/in/rebecca-yu-0835b7295/" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon"><Icon name="LinkedIn" size={28} /></span>
+          <span>
+            <strong>LinkedIn</strong>
+            <small>Connect and send me a message</small>
+          </span>
+        </a>
+        <a class="contact-card" href="https://github.com/rebeccayu2015" target="_blank" rel="noopener noreferrer">
+          <span class="contact-icon"><Icon name="Github" size={28} /></span>
+          <span>
+            <strong>GitHub</strong>
+            <small>Browse my projects and code</small>
+          </span>
+        </a>
+      </div>
+      <p class="contact-note">Resume and CV available upon request via LinkedIn.</p>
+    </div>
+  </div>
+</BaseLayout>

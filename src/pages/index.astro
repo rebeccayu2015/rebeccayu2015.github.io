@@ -1,0 +1,39 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PAGES } from "../config";
+import OverviewCard from "../components/content/OverviewCard.astro";
+
+// Load bio content
+const bioEntry = await getEntry("bio", "bio");
+const { Content: BioContent } = bioEntry
+	? await render(bioEntry)
+	: { Content: null };
+const overview = (await getCollection("overview")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title={PAGES.home.title}>
+	<div class="container-narrow">
+		{
+			(PAGES.home.title || PAGES.home.subtitle) && (
+				<header class="page-header">
+					{PAGES.home.title && (
+						<h1 class="page-title">{PAGES.home.title}</h1>
+					)}
+					{PAGES.home.subtitle && (
+						<p class="page-subtitle">{PAGES.home.subtitle}</p>
+					)}
+				</header>
+			)
+		}
+		<div class="prose">
+			{BioContent ? <BioContent /> : <p>Loading bio...</p>}
+		</div>
+		<section class="overview-section" aria-labelledby="overview-title">
+			<h2 id="overview-title" class="section-title">At a Glance</h2>
+			<div class="overview-grid">
+				{overview.map(({ data }) => <OverviewCard {...data} />)}
+			</div>
+		</section>
+	</div>
+</BaseLayout>

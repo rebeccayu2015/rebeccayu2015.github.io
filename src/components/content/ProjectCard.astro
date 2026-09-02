@@ -1,0 +1,40 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  award?: string;
+  description: string;
+  technologies: string[];
+  links: { label: string; url: string }[];
+  image: string;
+  imageAlt: string;
+}
+const props = Astro.props;
+const images = import.meta.glob("../../assets/projects/*", { eager: true, import: "default" }) as Record<string, ImageMetadata>;
+const imageAsset = images[`../../assets/projects/${props.image}`];
+---
+
+<article class="project-card">
+  <div class="project-image-wrap">
+    {imageAsset && <Image src={imageAsset} alt={props.imageAlt} class="project-image" widths={[420, 720, 960]} />}
+  </div>
+  <div class="project-content">
+    <div>
+      <h2 class="project-title">{props.title}</h2>
+      {props.subtitle && <p class="project-subtitle">{props.subtitle}</p>}
+      {props.award && <p class="project-award">{props.award}</p>}
+    </div>
+    <p class="project-description">{props.description}</p>
+    <ul class="technology-list" aria-label={`${props.title} technologies`}>
+      {props.technologies.map((technology) => <li>{technology}</li>)}
+    </ul>
+    <div class="entry-links">
+      {props.links.map((link) => {
+        const external = link.url.startsWith("http");
+        return <a href={link.url} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined}>{link.label}</a>;
+      })}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,41 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  organization: string;
+  role: string;
+  dates?: string;
+  location?: string;
+  description?: string;
+  logo?: string;
+  details?: string[];
+}
+
+const { organization, role, dates, location, description, logo, details = [] } = Astro.props;
+const logos = import.meta.glob("../../assets/logos/*", { eager: true, import: "default" }) as Record<string, ImageMetadata>;
+const logoAsset = logo ? logos[`../../assets/logos/${logo}`] : undefined;
+---
+
+<article class="experience-entry">
+  {logoAsset && (
+    <div class="experience-logo-wrap">
+      <Image src={logoAsset} alt={`${organization} logo`} class="experience-logo" widths={[96, 192]} />
+    </div>
+  )}
+  <div class="experience-content">
+    <div class="experience-heading">
+      <div>
+        <h3 class="experience-organization">{organization}</h3>
+        <p class="experience-role">{role}</p>
+      </div>
+      {dates && <p class="experience-dates">{dates}</p>}
+    </div>
+    {location && <p class="experience-location">{location}</p>}
+    {description && <p class="experience-description">{description}</p>}
+    {details.length > 0 && (
+      <ul class="experience-details">
+        {details.map((detail) => <li>{detail}</li>)}
+      </ul>
+    )}
+  </div>
+</article>

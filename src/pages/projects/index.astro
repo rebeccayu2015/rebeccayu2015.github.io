@@ -1,0 +1,13 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/content/ProjectCard.astro";
+import { PAGES } from "../../config";
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title={PAGES.projects.title}>
+  <div class="container-full">
+    <header class="page-header"><h1 class="page-title">{PAGES.projects.title}</h1></header>
+    <div class="project-grid">{projects.map(({ data }) => <ProjectCard {...data} />)}</div>
+  </div>
+</BaseLayout>

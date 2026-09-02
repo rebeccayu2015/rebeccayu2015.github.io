@@ -1,0 +1,13 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ExperienceEntry from "../components/content/ExperienceEntry.astro";
+import { PAGES } from "../config";
+const work = (await getCollection("work")).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title={PAGES.work.title}>
+  <div class="container-narrow">
+    <header class="page-header"><h1 class="page-title">{PAGES.work.title}</h1></header>
+    <div class="entry-list">{work.map(({ data }) => <ExperienceEntry organization={data.organization} role={data.role} dates={data.dates} location={data.location} description={data.description} logo={data.logo} />)}</div>
+  </div>
+</BaseLayout>

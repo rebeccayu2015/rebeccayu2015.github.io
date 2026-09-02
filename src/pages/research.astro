@@ -1,0 +1,22 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ExperienceEntry from "../components/content/ExperienceEntry.astro";
+import PublicationEntry from "../components/content/PublicationEntry.astro";
+import { PAGES } from "../config";
+const research = (await getCollection("research")).sort((a, b) => a.data.order - b.data.order);
+const publications = (await getCollection("publications")).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title={PAGES.research.title}>
+  <div class="container-narrow">
+    <header class="page-header"><h1 class="page-title">{PAGES.research.title}</h1></header>
+    <section class="page-section" aria-labelledby="publications-title">
+      <h2 id="publications-title" class="section-title">Publications</h2>
+      <div class="entry-list">{publications.map(({ data }) => <PublicationEntry title={data.title} authors={data.authors} equalContribution={data.equalContribution} venue={data.venue} description={data.description} paperUrl={data.paper_url} paperLabel={data.paper_label} codeUrl={data.code_url} resultsUrl={data.results_url} />)}</div>
+    </section>
+    <section class="page-section" aria-labelledby="experience-title">
+      <h2 id="experience-title" class="section-title">Research Experience</h2>
+      <div class="entry-list">{research.map(({ data }) => <ExperienceEntry organization={data.organization} role={`${data.role} · ${data.advisor}`} dates={data.dates} description={data.description} logo={data.logo} />)}</div>
+    </section>
+  </div>
+</BaseLayout>
