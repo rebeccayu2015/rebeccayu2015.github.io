@@ -9,7 +9,7 @@ export const SOCIALS: SocialLink[] = [
     },
     {
         name: "LinkedIn",
-        href: "https://www.linkedin.com/in/rebecca-yu-0835b7295/",
+        href: "https://www.linkedin.com/in/rebecca-j-yu/",
         linkTitle: `Rebecca Yu on LinkedIn`,
         isActive: true,
     },
